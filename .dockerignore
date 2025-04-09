@@ -1,3 +1,34 @@
-**
-!package.json
-!package-lock.json
+# Git files
+.git/
+.gitignore
+.gitmodules
+
+# Node dependencies (installed via npm ci in Dockerfile)
+node_modules/
+
+# Hugo build output and cache
+public/
+resources/
+
+# OS generated files
+.DS_Store
+*/.DS_Store
+*~
+*.swp
+
+# Docker related files
+Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Documentation/config not needed in image
+README.md
+container.md
+Makefile
+netlify.toml
+cloudbuild.yaml
+.htmltest.yml
+linkcheck-config.toml
+
+# Specific directories/files if not needed for build
+# (Add any other project-specific files/dirs to ignore here)
