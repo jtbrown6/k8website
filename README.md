@@ -7,6 +7,32 @@ This repository contains the assets required to build the [Kubernetes website an
 - [Contributing to the docs](#contributing-to-the-docs)
 - [Localization READMEs](#localization-readmes)
 
+## Jamal B changes
+
+This repository has been updated to include a portable Docker setup for building and running the website consistently across different environments.
+
+**Summary of Changes:**
+
+*   A multi-stage `Dockerfile` was created to build the Hugo site and serve it using a lightweight Nginx image.
+*   The `.dockerignore` file was updated to ensure necessary build files are included.
+*   A backup of the original Dockerfile was saved as `Dockerfile.bak`.
+*   A detailed guide for building and running the container was added: [`container.md`](./container.md).
+*   A playbook for updating the local repository and rebuilding the container was added: [`new-updates.md`](./new-updates.md).
+
+**Running the Container (Quick Start):**
+
+1.  **Build the image:**
+    ```bash
+    docker build -t website-image:latest .
+    ```
+2.  **Run the container:**
+    ```bash
+    docker run -d -p 8080:80 --name website-container website-image:latest
+    ```
+3.  Access the site at `http://localhost:8080`.
+
+For more detailed instructions, see [`container.md`](./container.md).
+
 ## Using this repository
 
 You can run the website locally using [Hugo (Extended version)](https://gohugo.io/), or you can run it in a container runtime. We strongly recommend using the container runtime, as it gives deployment consistency with the live website.
