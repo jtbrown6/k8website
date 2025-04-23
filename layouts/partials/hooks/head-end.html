@@ -1,3 +1,6 @@
+{{/* Include local fonts */}}
+<link rel="stylesheet" href="{{ "css/local-fonts.css" | relURL }}">
+
 {{/* reference page-specific open graph image */}}
 {{- if ( eq .Section "blog" ) -}}
 {{ with findRE "<img.*?>" .Content 1 }}
@@ -38,7 +41,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 
 {{- if .HasShortcode "kubeweekly" -}}
-<link href="https://cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+<link href="{{ "css/mailchimp-horizontal-slim.css" | relURL }}" rel="stylesheet" type="text/css">
 <style type="text/css">
         #mc_embed_signup{clear:left; width:100%;}
         #mc_embed_signup .button, #mc_embed_signup input.email {margin-right:15px; vertical-align: bottom}
@@ -58,7 +61,7 @@
 {{- end -}}
 
 {{- if .HasShortcode "cncf-landscape" -}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.min.js" integrity="sha384-hHTwgxzjpO1G1NI0wMHWQYUxnGtpWyDjVSZrFnDrlWa5OL+DFY57qnDWw/5WSJOl" crossorigin="anonymous"></script>
+<script src="{{ "js/iframe-resizer.min.js" | relURL }}"></script>
 {{- end -}}
 
 {{- if .HasShortcode "figure" -}}

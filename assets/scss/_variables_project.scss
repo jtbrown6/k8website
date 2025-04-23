@@ -1,6 +1,13 @@
 /* This file is provided by Docsy as an extension point for styling.
 Override variables from the theme here. */
 
+// Font overrides to use local fonts instead of Google Fonts
+$font-family-base: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$headings-font-family: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+// Disable external font loading if there are variables that control this
+$enable-external-fonts: false;
+
 $primary: #326ce5;
 $secondary: #495057;
 

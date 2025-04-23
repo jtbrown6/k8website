@@ -11,6 +11,100 @@ This repository contains the assets required to build the [Kubernetes website an
 
 This repository has been updated to include a portable Docker setup for building and running the website consistently across different environments.
 
+## Offline Mode Support
+
+This repository has been modified to support running the Kubernetes documentation website without internet connectivity. This ensures the UI renders correctly when the container runs in environments with restricted network access.
+
+### Changes Made for Offline Support
+
+The following external resources have been localized to eliminate dependencies on CDNs and external services:
+
+1. **JavaScript Libraries**:
+   - jQuery (from code.jquery.com)
+   - Mermaid.js (from cdn.jsdelivr.net)
+   - KaTeX math rendering library (from cdn.jsdelivr.net)
+   - iframe-resizer for CNCF landscape integration
+
+2. **Fonts**:
+   - Open Sans (from fonts.googleapis.com)
+   - Rubik (from fonts.googleapis.com)
+   - Tajawal (from fonts.googleapis.com)
+   - Vazir Font (from cdn.jsdelivr.net)
+
+3. **CSS Resources**:
+   - KaTeX CSS
+   - MailChimp newsletter signup form styles
+
+4. **Template Modifications**:
+   - Updated template files to reference local resources instead of CDNs
+   - Created custom font definitions in a local CSS file
+   - Modified SCSS variables to override Docsy theme defaults
+
+### Process for Updating Offline Resources
+
+When the official kubernetes.io documentation is updated, follow these steps to ensure the offline mode continues to work correctly:
+
+1. **Identify External Resources**:
+   ```bash
+   # Search for external URLs in HTML files
+   grep -r "https://" --include="*.html" layouts/
+   
+   # Search for external URLs in CSS files
+   grep -r "https://" --include="*.css,*.scss" assets/
+   ```
+
+2. **Download Updated Resources**:
+   - For JavaScript libraries:
+     ```bash
+     curl -o static/js/[filename].js [external-url]
+     ```
+   - For CSS files:
+     ```bash
+     curl -o static/css/[filename].css [external-url]
+     ```
+   - For fonts:
+     ```bash
+     # Create directories if needed
+     mkdir -p static/fonts/[font-family]
+     
+     # Download font files (repeat for each font file)
+     curl -o static/fonts/[font-family]/[filename].woff2 [external-url]
+     curl -o static/fonts/[font-family]/[filename].woff [external-url]
+     ```
+
+3. **Update Font Definitions**:
+   - If font versions have changed, update the `static/css/local-fonts.css` file with the correct paths and versions.
+
+4. **Update Template References**:
+   - Check and update the following files if external URLs have changed:
+     - `layouts/partials/head.html`
+     - `layouts/partials/scripts.html`
+     - `layouts/partials/hooks/head-end.html`
+     - `layouts/index.html`
+     - Any shortcodes that load external resources
+
+5. **Update SCSS Variables**:
+   - If font families have changed, update `assets/scss/_variables_project.scss`
+
+6. **Test in Offline Mode**:
+   - Build the container:
+     ```bash
+     docker build -t website-image:latest .
+     ```
+   - Run the container with network isolation:
+     ```bash
+     docker run --network none -p 8080:80 --name website-container website-image:latest
+     ```
+   - Verify all UI elements render correctly without internet connectivity
+
+7. **Document Changes**:
+   - Update this section with any new external resources that were localized
+   - Note any special handling required for specific resources
+
+By following this process, you can ensure the Kubernetes documentation website continues to function correctly in environments without internet connectivity, even as the official documentation evolves.
+
+## Jamal B changes (continued)
+
 **Summary of Changes:**
 
 *   A multi-stage `Dockerfile` was created to build the Hugo site and serve it using a lightweight Nginx image.
